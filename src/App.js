@@ -1,10 +1,12 @@
 import './App.css';
+import { useState } from 'react';
+
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import GlobalStats from './components/GlobalStats';
 import StatsTable from './components/StatsTable';
 import Footer from './components/Footer';
-import { useState } from 'react';
+import PersonalInfo from './components/PersonalInfo';
 
 function App() {
   const [show, setShow] = useState(true);
@@ -23,10 +25,10 @@ function App() {
       </div>}
       {!show && 
         <div>
-          Show personal country data {country}
+          <PersonalInfo country={country}/>
         </div>
       }
-      <Footer />
+      <Footer bottom={country.length > 0}/>
     </div>
   );
 }

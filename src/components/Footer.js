@@ -1,9 +1,11 @@
 import { Grid, Card } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 
-export default function Footer() {
+export default function Footer(props) {
+    const { bottom } = props;
+    
     return (
-        <div>
+        <div style={{ position: bottom && "fixed", bottom: bottom && 0, width: '100%' }}>
             <Card style={{ padding: '15px', backgroundColor: blue[700], color: 'white' }}>
                 <Grid container justifyContent="space-between" style={{ padding: '10px 50px'}}>
                     <Grid item>Created with <a href="https://covid19api.com" style={{ textDecoration: 'none', color: blue[300] }}>Covid19api</a></Grid>
