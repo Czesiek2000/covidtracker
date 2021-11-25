@@ -18,8 +18,8 @@ export default function GlobalStats() {
             fetch('https://api.covid19api.com/summary')
             .then(res => res.json())
             .then(d => {
-                console.log(d["Countries"]);
                 setGlobal(d["Global"])
+                console.log('fetch' + d["Global"])
             })
         }
         fetchData();
@@ -35,6 +35,12 @@ export default function GlobalStats() {
         return formated;
     }
 
+    function numberWithCommas(x) {
+        if (x !== undefined) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+    
     const classes = useStyles();
     return (
         <div className={classes.statsContainer}>
@@ -42,19 +48,19 @@ export default function GlobalStats() {
                 <Grid item xs={12} md={4} lg={4}>
                     <Card style={{ textAlign: 'center', padding: '15px', backgroundColor: blue[500], color: 'white' }}>
                         <Typography variant="h4">Total Confirmed</Typography>
-                        <Typography variant="h5">{global.TotalConfirmed}</Typography>
+                        {global !== undefined && <Typography variant="h5">{numberWithCommas(global.TotalConfirmed)}</Typography>}
                     </Card>
                 </Grid>
                 <Grid item xs={12} md={4} lg={4}>
                     <Card style={{ textAlign: 'center', padding: '15px', backgroundColor: red[500], color: 'white' }}>
                         <Typography variant="h4">Total deaths</Typography>
-                        <Typography variant="h5">{global.TotalDeaths}</Typography>
+                        {global !== undefined && <Typography variant="h5">{numberWithCommas(global.TotalDeaths)}</Typography>}
                     </Card>
                 </Grid>
                 <Grid item xs={12} md={4} lg={4}>
                     <Card style={{ textAlign: 'center', padding: '15px', backgroundColor: green[500], color: 'white' }}>
                         <Typography variant="h4">Total recovered</Typography>
-                        <Typography variant="h5">{global.TotalRecovered}</Typography>
+                        {global !== undefined && <Typography variant="h5">{numberWithCommas(global.TotalRecovered)}</Typography>}
                     </Card>
                 </Grid>                
             </Grid>
