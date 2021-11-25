@@ -15,18 +15,19 @@ const useStyles = makeStyles({
     }
 })
 
-export default function SearchBar({ handleClick }) {
-    const [country, setCountry] = useState('');
+export default function SearchBar({ handleClick, onFocus, handleReset }) {
+    let [country, setCountry] = useState('');
     
     function handleChange(e) {
         setCountry(e.target.value);
     }
-    
+
     const classes = useStyles();
     return (
         <div className={classes.container}>
-            <TextField id="outlined-basic" label="Search for country" variant="outlined" className={classes.field} onChange={handleChange}/>
+            <TextField id="outlined-basic" label="Search for country" variant="outlined" className={classes.field} onChange={handleChange} value={country}/>
             <Button variant="contained" color="primary" onClick={(e) => handleClick(country)}>Search</Button>
+            <Button variant="contained" color="secondary" onClick={(e) => { handleReset(country = ""); setCountry('') }} style={{ marginLeft: '10px' }}>Reset</Button>
         </div>
     )
 }

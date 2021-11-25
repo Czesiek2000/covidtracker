@@ -11,19 +11,26 @@ import PersonalInfo from './components/PersonalInfo';
 function App() {
   const [show, setShow] = useState(true);
   const [country, setCountry] = useState('');
+  
   function handleClick(val) {
     setCountry(val);
     setShow(false);
   }
+
+  function handleReset(){
+    setCountry('');
+    setShow(true);
+  }
+  
   return (
     <div className="App">
       <Header />
-      <SearchBar handleClick={handleClick}/>
+      <SearchBar handleClick={handleClick} handleReset={handleReset} />
       {show && <div>
         <GlobalStats />
         <StatsTable />
       </div>}
-      {!show && 
+      {!show &&
         <div>
           <PersonalInfo country={country}/>
         </div>

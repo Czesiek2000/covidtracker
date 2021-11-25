@@ -5,7 +5,11 @@ import { Line } from "react-chartjs-2";
 export default function PersonalInfo(props) {
     const { country } = props;
     const [data, setData] = useState([]);
-    const [dataset, setDataset] = useState(null);
+    const [dataset, setDataset] = useState([]);
+
+    function addZero(i) {
+        return i < 10 ? "0" + i : i;
+    }
 
     useEffect(() => {
         fetch(`https://api.covid19api.com/total/dayone/country/${country}`)
@@ -20,8 +24,8 @@ export default function PersonalInfo(props) {
         function getLabels(){
             const label = [];
             data.forEach((element) => {
-                // let date = `${new Date(element.Date).getDay() + 1} / ${new Date(element.Date).getMonth()} / ${new Date(element.Date).getFullYear()}`;
-                label.push(element.Date);
+                let date = `${addZero(new Date(element.Date).getDate())} / ${addZero(new Date(element.Date).getMonth() + 1)} / ${addZero(new Date(element.Date).getFullYear())}`;
+                label.push(date);
             });
             let set = {
                 labels: label,
@@ -51,13 +55,15 @@ export default function PersonalInfo(props) {
             }
             setDataset(set);
         }
-        getLabels();
+        if(data.length > 0){
+            getLabels();
+        }
     }, [data]);
 
     return (
         <div style={{ paddingBottom: '140px'}}>
             <h1>Information for { country }</h1>
-            <Line data={dataset}/>
+            {dataset.length !== 0 && <Line data={dataset}/> }
         </div>
     );
 }
