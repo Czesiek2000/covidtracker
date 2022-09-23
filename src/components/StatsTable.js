@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Button, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 
 const useStyles = makeStyles({
     tableRow: {
@@ -24,6 +24,13 @@ export default function StatsTable(){
         }
         fetchData();
     },[])
+
+    function numberWithCommas(x) {
+        if (x !== undefined) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+
     return (
         <div>
             <TableContainer>
@@ -43,12 +50,12 @@ export default function StatsTable(){
                     {countries.map((c, i) => (
                         <TableRow style={ i % 2 ? { backgroundColor : "#f2f2f2" } : { backgroundColor : "white" }} className={classes.tableRow} key={i}>
                             <TableCell style={{ textAlign: 'center' }}>{c["Country"]}</TableCell>
-                            <TableCell style={{ textAlign: 'center' }}>{c["TotalConfirmed"]}</TableCell>
-                            <TableCell style={{ textAlign: 'center' }}>{c["TotalDeaths"]}</TableCell>
-                            <TableCell style={{ textAlign: 'center' }}>{c["TotalRecovered"]}</TableCell>
-                            <TableCell style={{ textAlign: 'center' }}>{c["NewConfirmed"]}</TableCell>
-                            <TableCell style={{ textAlign: 'center' }}>{c["NewDeaths"]}</TableCell>
-                            <TableCell style={{ textAlign: 'center' }}>{c["NewRecovered"]}</TableCell>
+                            <TableCell style={{ textAlign: 'center' }}>{numberWithCommas(c["TotalConfirmed"])}</TableCell>
+                            <TableCell style={{ textAlign: 'center' }}>{numberWithCommas(c["TotalDeaths"])}</TableCell>
+                            <TableCell style={{ textAlign: 'center' }}>{numberWithCommas(c["TotalRecovered"])}</TableCell>
+                            <TableCell style={{ textAlign: 'center' }}>{numberWithCommas(c["NewConfirmed"])}</TableCell>
+                            <TableCell style={{ textAlign: 'center' }}>{numberWithCommas(c["NewDeaths"])}</TableCell>
+                            <TableCell style={{ textAlign: 'center' }}>{numberWithCommas(c["NewRecovered"])}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -21,7 +21,7 @@ function App() {
     setCountry('');
     setShow(true);
   }
-  
+
   return (
     <div className="App">
       <Header />
@@ -32,10 +32,10 @@ function App() {
       </div>}
       {!show &&
         <div>
-          <PersonalInfo country={country}/>
+          <PersonalInfo country={country} handleReset={handleReset}/>
         </div>
       }
-      <Footer bottom={country.length > 0}/>
+      <Footer />
     </div>
   );
 }

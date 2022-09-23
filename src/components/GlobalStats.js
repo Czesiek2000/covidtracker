@@ -19,7 +19,6 @@ export default function GlobalStats() {
             .then(res => res.json())
             .then(d => {
                 setGlobal(d["Global"])
-                console.log('fetch' + d["Global"])
             })
         }
         fetchData();
@@ -31,7 +30,7 @@ export default function GlobalStats() {
 
     const formatDate = () => {
         let date = global.Date;
-        let formated = `${checkZero(new Date(date).getDay() + 1)} / ${new Date(date).getMonth() + 1} / ${new Date(date).getFullYear()} ${checkZero(new Date(date).getHours())} : ${checkZero(new Date(date).getMinutes())}`;
+        let formated = `${checkZero(new Date(date).getDay() + 1)} / ${checkZero(new Date(date).getMonth() + 1)} / ${new Date(date).getFullYear()} ${checkZero(new Date(date).getHours())} : ${checkZero(new Date(date).getMinutes())}`;
         return formated;
     }
 

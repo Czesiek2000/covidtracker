@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { red, green, blue } from '@material-ui/core/colors'
 import { Line } from "react-chartjs-2";
+import { Button } from "@material-ui/core";
 
-export default function PersonalInfo(props) {
-    const { country } = props;
+export default function PersonalInfo({ country, handleReset }) {
     const [data, setData] = useState([]);
     const [dataset, setDataset] = useState([]);
 
@@ -13,10 +13,18 @@ export default function PersonalInfo(props) {
 
     useEffect(() => {
         fetch(`https://api.covid19api.com/total/dayone/country/${country}`)
-            .then((response) => response.json())
+            .then((response) => {
+                if(response.ok){
+                    return response.json();
+                }
+                throw new Error("cannot fetch data")
+            })
             .then((data) => {
                 setData(data);
-            });
+            })
+            .catch(err => {
+                setData(err);
+            })
     }, [country]);
 
     useEffect(() => {
@@ -55,15 +63,21 @@ export default function PersonalInfo(props) {
             }
             setDataset(set);
         }
-        if(data.length > 0){
+        if(Array.isArray(data) && data.length > 0){
             getLabels();
         }
     }, [data]);
 
     return (
         <div style={{ paddingBottom: '140px'}}>
-            <h1>Information for { country }</h1>
-            {dataset.length !== 0 && <Line data={dataset}/> }
+            <h1 style={{ textAlign: 'center' }}>Information for { country }</h1>
+            {(Array.isArray(data) && data.length !== 0) && <Line data={dataset}/> }
+            {(!Array.isArray(data) || data.length === 0) && <h3 style={{ color: red[500], textAlign: 'center' }}>{country} was not found</h3>}
+            <Button variant="contained" color="primary" 
+                onClick={() => handleReset()} 
+                style={{ marginTop: '10px' }}>
+                    Go back to list
+            </Button>
         </div>
     );
 }
